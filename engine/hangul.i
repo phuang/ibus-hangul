@@ -28,6 +28,7 @@
 
 %init %{
 %}
+
 %typemap (in) ucschar * {
     if (PyUnicode_Check ($input)) {
         $1 = PyUnicode_AsUnicode ($input);
@@ -46,6 +47,14 @@
     else {
         Py_INCREF (Py_None);
         $result = Py_None;
+    }
+}
+
+/* define exception */
+%exception {
+    $action
+    if (PyErr_Occurred ()) {
+        return NULL;
     }
 }
 
@@ -191,7 +200,13 @@ typedef struct {} HangulInputContext;
 typedef struct {} HanjaTable;
 %extend HanjaTable {
     HanjaTable (const char *name) {
-        return hanja_table_load (name);
+        HanjaTable *table = hanja_table_load (name);
+        if (table == NULL) {
+            PyErr_Format (PyExc_IOError,
+                            "Can not load HanjaTabel from %s.", name);
+            return NULL;
+        }
+        return table;
     }
 
     ~HanjaTable () {
