@@ -1,7 +1,7 @@
 # vim:set et sts=4 sw=4:
 # -*- coding: utf-8 -*-
 #
-# ibus-anthy - The Anthy engine for IBus
+# ibus-hangul - The Hangul engine for IBus
 #
 # Copyright (c) 2007-2008 Huang Peng <shawn.p.huang@gmail.com>
 #
@@ -24,13 +24,13 @@ from os import path
 import ibus
 import engine
 
-FACTORY_PATH = "/com/redhat/IBus/engines/Anthy/Factory"
-ENGINE_PATH = "/com/redhat/IBus/engines/Anthy/Engine/"
+FACTORY_PATH = "/com/redhat/IBus/engines/Hangul/Factory"
+ENGINE_PATH = "/com/redhat/IBus/engines/Hangul/Engine/"
 
 class EngineFactory(ibus.EngineFactoryBase):
-    NAME = "Anthy"
-    LANG = "ja"
-    ICON = path.join(os.getenv("IBUS_ANTHY_PKGDATADIR"), "icons/ibus-anthy.png")
+    NAME = "Hangul"
+    LANG = "ko"
+    ICON = path.join(os.getenv("IBUS_HANGUL_PKGDATADIR"), "icons/ibus-hangul.png")
     AUTHORS = "Huang Peng <shawn.p.huang@gmail.com>"
     CREDITS = "GPLv2"
 

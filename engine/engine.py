@@ -21,7 +21,7 @@
 
 import gobject
 import ibus
-import anthy
+import hangul
 from tables import *
 from ibus import keysyms
 
