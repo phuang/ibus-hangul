@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# ibus - The Input Bus
+# ibus-hangul - The Hangul engine for IBus
 #
 # Copyright (c) 2007-2008 Huang Peng <shawn.p.huang@gmail.com>
 #
@@ -21,6 +21,6 @@
 prefix=@prefix@
 datadir=@datadir@
 export IBUS_PREFIX=@prefix@
-export IBUS_ANTHY_PKGDATADIR=@datadir@/@PACKAGE@
+export IBUS_HANGUL_PKGDATADIR=@datadir@/@PACKAGE@
 exec python @datadir@/@PACKAGE@/main.py $@
 

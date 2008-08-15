@@ -1,6 +1,6 @@
 # vim:set noet ts=4:
 #
-# ibus-anthy - The Anthy engine for IBus
+# ibus-hangul - The Hangul engine for IBus
 #
 # Copyright (c) 2007-2008 Huang Peng <shawn.p.huang@gmail.com>
 #
@@ -18,62 +18,62 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-engine_anthy_PYTHON = \
+engine_hangul_PYTHON = \
 	engine.py \
 	factory.py \
 	main.py \
 	tables.py \
 	$(NULL)
-engine_anthydir = $(pkgdatadir)
+engine_hanguldir = $(pkgdatadir)
 
-anthy_DATA = \
-	anthy.py \
+hangul_DATA = \
+	hangul.py \
 	$(NULL)
-anthy_LTLIBRARIES = _anthy.la
-anthydir = @pyexecdir@
+hangul_LTLIBRARIES = _hangul.la
+hanguldir = @pyexecdir@
 
-_anthy_la_SOURCES = \
-	$(NULL)
-
-nodist__anthy_la_SOURCES = \
-	anthy_wrap.c \
+_hangul_la_SOURCES = \
 	$(NULL)
 
-_anthy_la_CFLAGS = \
+nodist__hangul_la_SOURCES = \
+	hangul_wrap.c \
+	$(NULL)
+
+_hangul_la_CFLAGS = \
 	@ANTHY_CFLAGS@ \
 	@PYTHON_CFLAGS@ \
 	$(NULL)
 
-_anthy_la_LDFLAGS = \
+_hangul_la_LDFLAGS = \
 	@ANTHY_LIBS@ \
-	-rpath $(anthydir) \
+	-rpath $(hanguldir) \
 	-avoid-version \
 	-module \
 	$(NULL)
 
-bin_SCRIPTS = ibus-engine-anthy
-engine_DATA = anthy.engine
+bin_SCRIPTS = ibus-engine-hangul
+engine_DATA = hangul.engine
 enginedir = $(datadir)/ibus/engine
 
-anthy.py anthy_wrap.c: anthy.i
-	$(SWIG) -python -I/usr/include -o anthy_wrap.c $(srcdir)/anthy.i
+hangul.py hangul_wrap.c: hangul.i
+	$(SWIG) -python -I/usr/include -o hangul_wrap.c $(srcdir)/hangul.i
 
 test:
 	$(ENV) \
-		IBUS_ANTHY_PKGDATADIR=$(abs_top_srcdir) \
+		IBUS_HANGUL_PKGDATADIR=$(abs_top_srcdir) \
 		PYTHONPATH=$(builddir)/.libs \
 		$(PYTHON) \
 		$(srcdir)/main.py
 
 EXTRA_DIST = \
-	anthy.i \
-	anthy.engine.in \
-	ibus-engine-anthy.in \
+	hangul.i \
+	hangul.engine.in \
+	ibus-engine-hangul.in \
 	$(NULL)
 
 CLEANFILES = \
-	anthy.py \
-	anthy_wrap.* \
+	hangul.py \
+	hangul_wrap.* \
 	*.pyc \
 	$(MULL)
 

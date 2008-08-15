@@ -1,6 +1,6 @@
 # vim:set noet ts=4:
 #
-# ibus - The Anthy engine for IBus
+# ibus-hangul - The Hangul engine for IBus
 #
 # Copyright (c) 2007-2008 Huang Peng <shawn.p.huang@gmail.com>
 #
@@ -20,11 +20,11 @@
 # Boston, MA  02111-1307  USA
 
 icons_DATA = \
-	ibus-anthy.png \
+	ibus-hangul.png \
 	$(NULL)
 
 iconsdir = $(pkgdatadir)/icons
 
 EXTRA_DIST = \
-	ibus-anthy.png \
+	ibus-hangul.png \
 	$(NULL)
