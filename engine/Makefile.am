@@ -22,7 +22,6 @@ engine_hangul_PYTHON = \
 	engine.py \
 	factory.py \
 	main.py \
-	tables.py \
 	$(NULL)
 engine_hanguldir = $(pkgdatadir)
 

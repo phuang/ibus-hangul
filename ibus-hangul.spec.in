@@ -3,7 +3,7 @@
 Name:       @PACKAGE_NAME@
 Version:    @PACKAGE_VERSION@
 Release:    1%{?dist}
-Summary:    The Anthy engine for IBus input platform
+Summary:    The Hangul engine for IBus input platform
 License:    GPLv2+
 Group:      System Environment/Libraries
 URL:        http://code.google.com/p/ibus/
@@ -14,16 +14,15 @@ BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  gettext-devel
 BuildRequires:  libtool
 BuildRequires:  python-devel
-BuildRequires:  anthy-devel
+BuildRequires:  libhangul-devel
 BuildRequires:  swig
 BuildRequires:  pkgconfig
 
 Requires:   ibus
-Requires:   anthy
 
 %description
-The Anthy engine for IBus platform. It provides Japanese input method from
-libanthy.
+The Hangul engine for IBus platform. It provides Korean input method from
+libhangul.
 
 %prep
 %setup -q
@@ -36,7 +35,7 @@ make %{?_smp_mflags}
 %install
 rm -rf $RPM_BUILD_ROOT
 make DESTDIR=${RPM_BUILD_ROOT} install
-rm -f $RPM_BUILD_ROOT%{python_sitearch}/_anthy.la
+rm -f $RPM_BUILD_ROOT%{python_sitearch}/_hangul.la
 
 %find_lang %{name}
 
@@ -47,12 +46,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING README
 # %dir %{python_sitearch}/ibus
-%{python_sitearch}/anthy.py*
-%{python_sitearch}/_anthy.so
+%{python_sitearch}/hangul.py*
+%{python_sitearch}/_hangul.so
 %dir %{_datadir}/@PACKAGE@
-%{_bindir}/ibus-engine-anthy
+%{_bindir}/ibus-engine-hangul
 %{_datadir}/@PACKAGE@/*
-%{_datadir}/ibus/engine/anthy.engine
+%{_datadir}/ibus/engine/hangul.engine
 
 %changelog
 * Fri Aug 08 2008 Huang Peng <shawn.p.huang@gmail.com> - @VERSION@-1
