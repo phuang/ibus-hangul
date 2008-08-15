@@ -31,13 +31,20 @@
 
 %typemap (in) ucschar * {
     if (PyUnicode_Check ($input)) {
-        $1 = (ucschar *)PyUnicode_AsUnicode ($input);
+        Py_ssize_t size = PyUnicode_GetSize ($input);
+        $1 = (ucschar *)malloc ((size + 1) * sizeof (ucschar));
+        PyUnicode_AsWideChar ((PyUnicodeObject *)$input, (wchar_t *)$1, size);
+        $1[size] = 0;
     }
     else {
         PyErr_SetString (PyExc_TypeError,
             "arg msut be unistr");
         return NULL;
     }
+}
+
+%typemap(freearg) ucschar * {
+    free ($1);
 }
 
 %typemap (out) ucschar * {
@@ -233,13 +240,16 @@ bool hangul_is_syllable(ucschar c);
 bool hangul_is_jaso(ucschar c);
 bool hangul_is_jamo(ucschar c);
 
+/*
 ucschar hangul_jaso_to_jamo(ucschar ch);
 ucschar hangul_choseong_to_jamo(ucschar ch);
 ucschar hangul_jungseong_to_jamo(ucschar ch);
 ucschar hangul_jongseong_to_jamo(ucschar ch);
+*/
 
 ucschar hangul_choseong_to_jongseong(ucschar ch);
 ucschar hangul_jongseong_to_choseong(ucschar ch);
+
 /*
 void    hangul_jongseong_dicompose(ucschar ch, ucschar* jong, ucschar* cho);
 */
