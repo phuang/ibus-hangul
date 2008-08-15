@@ -31,7 +31,7 @@
 
 %typemap (in) ucschar * {
     if (PyUnicode_Check ($input)) {
-        $1 = PyUnicode_AsUnicode ($input);
+        $1 = (ucschar *)PyUnicode_AsUnicode ($input);
     }
     else {
         PyErr_SetString (PyExc_TypeError,
@@ -42,7 +42,8 @@
 
 %typemap (out) ucschar * {
     if ($1 != NULL) {
-        $result = PyUnicode_FromWideChar ($1, wcslen ($1));
+        $result = PyUnicode_FromWideChar ((const wchar_t *)$1,
+                    wcslen ((const wchar_t *)$1));
     }
     else {
         Py_INCREF (Py_None);
@@ -222,6 +223,35 @@ typedef struct {} HanjaTable;
     }
 }
 
+bool hangul_is_choseong(ucschar c);
+bool hangul_is_jungseong(ucschar c);
+bool hangul_is_jongseong(ucschar c);
+bool hangul_is_choseong_conjoinable(ucschar c);
+bool hangul_is_jungseong_conjoinable(ucschar c);
+bool hangul_is_jongseong_conjoinable(ucschar c);
+bool hangul_is_syllable(ucschar c);
+bool hangul_is_jaso(ucschar c);
+bool hangul_is_jamo(ucschar c);
+
+ucschar hangul_jaso_to_jamo(ucschar ch);
+ucschar hangul_choseong_to_jamo(ucschar ch);
+ucschar hangul_jungseong_to_jamo(ucschar ch);
+ucschar hangul_jongseong_to_jamo(ucschar ch);
+
+ucschar hangul_choseong_to_jongseong(ucschar ch);
+ucschar hangul_jongseong_to_choseong(ucschar ch);
+/*
+void    hangul_jongseong_dicompose(ucschar ch, ucschar* jong, ucschar* cho);
+*/
+ucschar hangul_jaso_to_syllable(ucschar choseong,
+                ucschar jungseong,
+                ucschar jongseong);
+/*
+void    hangul_syllable_to_jaso(ucschar syllable,
+                ucschar* choseong,
+                ucschar* jungseong,
+                ucschar* jongseong);
+*/
 enum {
     HANGUL_CHOSEONG_FILLER  = 0x115f,   /* hangul choseong filler */
     HANGUL_JUNGSEONG_FILLER = 0x1160    /* hangul jungseong filler */
