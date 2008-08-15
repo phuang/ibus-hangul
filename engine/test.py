@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import hangul
 import sys
+sys.path.append(".libs")
 
 ctx = hangul.HangulInputContext("2")
 ctx.process(ord('a'))
