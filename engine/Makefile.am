@@ -40,12 +40,12 @@ nodist__hangul_la_SOURCES = \
 	$(NULL)
 
 _hangul_la_CFLAGS = \
-	@ANTHY_CFLAGS@ \
+	@HANGUL_CFLAGS@ \
 	@PYTHON_CFLAGS@ \
 	$(NULL)
 
 _hangul_la_LDFLAGS = \
-	@ANTHY_LIBS@ \
+	@HANGUL_LIBS@ \
 	-rpath $(hanguldir) \
 	-avoid-version \
 	-module \
