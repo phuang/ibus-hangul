@@ -60,6 +60,7 @@ hangul.py hangul_wrap.c: hangul.i
 
 test:
 	$(ENV) \
+		DBUS_DEBUG=true \
 		IBUS_HANGUL_PKGDATADIR=$(abs_top_srcdir) \
 		PYTHONPATH=$(builddir)/.libs \
 		$(PYTHON) \
