@@ -22,7 +22,6 @@
 import gobject
 import ibus
 import hangul
-from tables import *
 from ibus import keysyms
 from ibus import modifier
 
