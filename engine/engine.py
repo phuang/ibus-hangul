@@ -60,7 +60,14 @@ class Engine(ibus.EngineBase):
 
     def __update(self):
         preedit_string = self.__context.get_preedit_string()
-        self.update_preedit(preedit_string, None, len(preedit_string), len(preedit_string) > 0)
+        if preedit_string:
+            attrs = ibus.AttrList()
+            l = len(preedit_string)
+            attrs.append(ibus.AttributeForeground(0xffffff, 0, l))
+            attrs.append(ibus.AttributeBackground(0, 0, l))
+            self.update_preedit(preedit_string, attrs, l, True)
+        else:
+            self.hide_preedit()
         commit_string = self.__context.get_commit_string()
         if commit_string:
             self.commit_string(commit_string)
