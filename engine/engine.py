@@ -34,10 +34,11 @@ class Engine(ibus.EngineBase):
 
     def __init__(self, bus, object_path):
         super(Engine, self).__init__(bus, object_path)
-        if Engine.__hanja_table == None:
-            table = "/usr/share/libhangul/hanja/hanja.txt"
-            Engine.__hanja_table = \
-                hangul.HanjaTable(table)
+        # if Engine.__hanja_table == None:
+        #     table = "/usr/share/libhangul/hanja/hanja.txt"
+        #     Engine.__hanja_table = \
+        #         hangul.HanjaTable(table)
+
         # create anthy context
         self.__context = hangul.HangulInputContext("2")
         self.__reset()
