@@ -88,6 +88,10 @@ class Engine(ibus.EngineBase):
                 if self.__context.backspace():
                     self.__update()
                     return True
+            else:
+                text = self.__context.flush()
+                self.hide_preedit()
+                self.commit_string(text)
             return False
 
         return False
