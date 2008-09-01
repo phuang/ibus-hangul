@@ -23,7 +23,7 @@ engine_hangul_PYTHON = \
 	factory.py \
 	main.py \
 	$(NULL)
-engine_hanguldir = $(pkgdatadir)
+engine_hanguldir = $(pkgdatadir)/engine
 
 hangul_DATA = \
 	hangul.py \
