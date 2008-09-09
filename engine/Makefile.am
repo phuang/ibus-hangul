@@ -45,6 +45,7 @@ _hangul_la_CFLAGS = \
 
 _hangul_la_LDFLAGS = \
 	@HANGUL_LIBS@ \
+	@PYTHON_LIBS@ \
 	-rpath $(hanguldir) \
 	-avoid-version \
 	-module \
