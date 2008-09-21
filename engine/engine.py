@@ -59,7 +59,12 @@ class Engine(ibus.EngineBase):
     def cursor_down(self):
         return True
 
-    def __update(self):
+    def __flush(self):
+        text = self.__context.flush()
+        self.hide_preedit()
+        self.commit_string(text)
+
+    def __update_preedit(self):
         preedit_string = self.__context.get_preedit_string()
         if preedit_string:
             attrs = ibus.AttrList()
@@ -69,6 +74,8 @@ class Engine(ibus.EngineBase):
             self.update_preedit(preedit_string, attrs, l, True)
         else:
             self.hide_preedit()
+
+    def __commit_current(self):
         commit_string = self.__context.get_commit_string()
         if commit_string:
             self.commit_string(commit_string)
@@ -77,24 +84,28 @@ class Engine(ibus.EngineBase):
         # ignore key release events
         if not is_press:
             return False
-        state = state & (modifier.SHIFT_MASK | modifier.CONTROL_MASK | modifier.MOD1_MASK)
 
-        if state == 0:
-            if keyval >= keysyms.exclam and keyval <= keysyms.asciitilde:
-                if self.__context.process(keyval):
-                    self.__update()
-                    return True
-            elif keyval == keysyms.BackSpace:
-                if self.__context.backspace():
-                    self.__update()
-                    return True
-            else:
-                text = self.__context.flush()
-                self.hide_preedit()
-                self.commit_string(text)
+        if state & (modifier.CONTROL_MASK | modifier.MOD1_MASK):
             return False
 
-        return False
+        res = False
+        if keyval == keysyms.BackSpace:
+            res = self.__context.backspace()
+            if res:
+                self.__update_preedit()
+        else:
+            if state & modifier.LOCK_MASK:
+                # toggle case
+                c = unichr(keyval)
+                if c.islower():
+                    keyval = ord(c.upper())
+                else:
+                    keyval = ord(c.lower())
+
+            res = self.__context.process(keyval)
+            self.__update_preedit()
+            self.__commit_current()
+        return res
 
     def property_activate(self, prop_name, state):
         pass
@@ -103,5 +114,4 @@ class Engine(ibus.EngineBase):
         pass
 
     def focus_out(self):
-        pass
-
+        self.__flush()
