@@ -62,7 +62,7 @@ test:
 	$(ENV) \
 		DBUS_DEBUG=true \
 		IBUS_HANGUL_PKGDATADIR=$(abs_top_srcdir) \
-		PYTHONPATH=$(builddir)/.libs \
+		PYTHONPATH=$${PYTHONPATH}:$(builddir)/.libs \
 		$(PYTHON) \
 		$(srcdir)/main.py
 
