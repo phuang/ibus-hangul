@@ -1,6 +1,0 @@
-Exec=@prefix@/bin/ibus-engine-hangul
-Name=Hangul
-Lang=ko
-Icon=@prefix@/share/@PACKAGE@/icons/ibus-hangul.png
-Author=Huang Peng <shawn.p.huang@gmail.com>
-Credits=

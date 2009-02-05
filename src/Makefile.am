@@ -1,6 +1,6 @@
 # vim:set noet ts=4:
 #
-# ibus-hangul - The Hangul engine for IBus
+# ibus-anthy - The Anthy engine for IBus
 #
 # Copyright (c) 2007-2008 Huang Peng <shawn.p.huang@gmail.com>
 #
@@ -18,47 +18,48 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-SUBDIRS = \
-	src \
-	icons \
-	m4 \
-	po \
+AM_CFLAGS = \
+	@IBUS_CFLAGS@ \
+	@HANGUL_CFLAGS@ \
+	-DPKGDATADIR=\"$(pkgdatadir)\" \
+	$(NULL)
+AM_LDFLAGS = \
+	@IBUS_LIBS@ \
+	@HANGUL_LIBS@ \
 	$(NULL)
 
-ACLOCAL_AMFLAGS = -I m4
+check_PROGRAMS = \
+	$(NULL)
+
+TESTS = \
+	$(check_PROGRAMS) \
+	$(NULL)
+
+libexec_PROGRAMS = ibus-engine-hangul
+
+ibus_engine_hangul_SOURCES = \
+	main.c \
+	engine.c \
+	engine.h \
+	$(NULL)
+ibus_engine_hangul_CFLAGS = \
+	@IBUS_CFLAGS@ \
+	@HANGUL_CFLAGS@ \
+	-DPKGDATADIR=\"$(pkgdatadir)\" \
+	$(NULL)
+ibus_engine_hangul_LDFLAGS = \
+	@IBUS_LIBS@ \
+	@HANGUL_LIBS@ \
+	$(NULL)
+
+component_DATA = \
+	hangul.xml \
+	$(NULL)
+componentdir = @datadir@/ibus/component
 
 EXTRA_DIST = \
-	autogen.sh \
-	ibus-hangul.spec.in \
+	hangul.xml.in \
 	$(NULL)
 
-noinst_DIST = \
-	$(NULL)
-
-
-DISTCLEANFILES = \
-	po/stamp-it \
-	$(NULL)
-
-rpm: dist @PACKAGE_NAME@.spec
-	rpmbuild -bb \
-			--define "_sourcedir `pwd`" \
-			--define "_builddir `pwd`" \
-			--define "_srcrpmdir `pwd`" \
-			--define "_rpmdir `pwd`" \
-			--define "_specdir `pwd`" \
-			@PACKAGE_NAME@.spec
-
-srpm: dist @PACKAGE_NAME@.spec
-	rpmbuild -bs \
-			--define "_sourcedir `pwd`" \
-			--define "_builddir `pwd`" \
-			--define "_srcrpmdir `pwd`" \
-			--define "_rpmdir `pwd`" \
-			--define "_specdir `pwd`" \
-			@PACKAGE_NAME@.spec
-
-clean-rpm:
-	$(RM) -r "`uname -i`"
-
-clean-local: clean-rpm
+test: ibus-engine-hangul
+	$(builddir)/ibus-engine-hangul
