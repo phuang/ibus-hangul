@@ -61,5 +61,17 @@ EXTRA_DIST = \
 	hangul.xml.in \
 	$(NULL)
 
+CLEANFILES = \
+	hangul.xml \
+	$(NULL)
+
+hangul.xml: hangul.xml.in
+	( \
+		libexecdir=${libexecdir}; \
+		pkgdatadir=${pkgdatadir}; \
+		s=`cat $<`; \
+		eval "echo \"$${s}\""; \
+	) > $@
+
 test: ibus-engine-hangul
 	$(builddir)/ibus-engine-hangul

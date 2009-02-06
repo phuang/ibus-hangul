@@ -75,7 +75,7 @@ AC_CONFIG_FILES([ po/Makefile.in
 Makefile
 ibus-hangul.spec
 src/Makefile
-src/hangul.xml
+src/hangul.xml.in
 icons/Makefile
 m4/Makefile
 ])

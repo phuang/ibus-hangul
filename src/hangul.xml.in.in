@@ -3,7 +3,7 @@
 <component>
 	<name>org.freedesktop.IBus.Hangul</name>
 	<description>Hangul Component</description>
-	<exec>@prefix@/libexec/ibus-engine-hangul --ibus</exec>
+	<exec>${libexecdir}/ibus-engine-hangul --ibus</exec>
 	<version>@VERSION@</version>
 	<author>Peng Huang &lt;shawn.p.huang@gmail.com&gt;</author>
 	<license>GPL</license>
@@ -16,7 +16,7 @@
 			<language>ko</language>
 			<license>GPL</license>
 			<author>Peng Huang &lt;shawn.p.huang@gmail.com&gt;</author>
-			<icon>@prefix@/share/ibus-hangul/icons/ibus-hangul.png</icon>
+			<icon>${pkgdatadir}/icons/ibus-hangul.png</icon>
 			<layout>us</layout>
 			<longname>Hangul</longname>
 			<description>Hangul Input Method</description>
