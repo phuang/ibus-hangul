@@ -149,7 +149,7 @@ ibus_hangul_engine_init (IBusHangulEngine *hangul)
     hangul->prop_list = ibus_prop_list_new ();
     ibus_prop_list_append (hangul->prop_list,  hangul->hangul_mode_prop);
 
-    hangul->table = ibus_lookup_table_new (9, TRUE);
+    hangul->table = ibus_lookup_table_new (9, 0, TRUE, TRUE);
 }
 
 static GObject*
