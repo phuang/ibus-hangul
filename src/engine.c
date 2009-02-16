@@ -154,8 +154,8 @@ ibus_hangul_engine_init (IBusHangulEngine *hangul)
 
 static GObject*
 ibus_hangul_engine_constructor (GType                   type,
-                              guint                   n_construct_params,
-                              GObjectConstructParam  *construct_params)
+                                guint                   n_construct_params,
+                                GObjectConstructParam  *construct_params)
 {
     IBusHangulEngine *hangul;
 
