@@ -8,7 +8,7 @@
 	<author>Peng Huang &lt;shawn.p.huang@gmail.com&gt;</author>
 	<license>GPL</license>
 	<homepage>http://code.google.com/p/ibus</homepage>
-	<textdomain>ibus-hanful</textdomain>
+	<textdomain>ibus-hangul</textdomain>
 
 	<engines>
 		<engine>
