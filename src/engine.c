@@ -234,6 +234,14 @@ ibus_hangul_engine_process_key_event (IBusEngine     *engine,
     if (modifiers & (IBUS_CONTROL_MASK | IBUS_MOD1_MASK))
         return FALSE;
 
+    // if we don't ignore shift keys, shift key will make flush the preedit 
+    // string. So you cannot input shift+key.
+    // Let's think about these examples:
+    //   dlTek (2 set)
+    //   qhRdmaqkq (2 set)
+    if (keyval == IBUS_Shift_L || keyval == IBUS_Shift_R)
+        return FALSE;
+
     if (keyval == IBUS_BackSpace) {
         retval = hangul_ic_backspace (hangul->context);
     } else {
