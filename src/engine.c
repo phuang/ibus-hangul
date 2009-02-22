@@ -236,26 +236,23 @@ ibus_hangul_engine_process_key_event (IBusEngine     *engine,
 
     if (keyval == IBUS_BackSpace) {
         retval = hangul_ic_backspace (hangul->context);
-        return retval;
-    }
-
-    if (keyval >= IBUS_exclam && keyval <= IBUS_asciitilde) {
+    } else {
         retval = hangul_ic_process (hangul->context, keyval);
-
-        str = hangul_ic_get_commit_string (hangul->context);
-
-        if (str != NULL && str[0] != 0) {
-            IBusText *text = ibus_text_new_from_ucs4 (str);
-            ibus_engine_commit_text ((IBusEngine *)hangul, text);
-            g_object_unref (text);
-        }
-
-        ibus_hangul_engine_update_preedit_text (hangul);
-        return retval;
     }
 
-    ibus_hangul_engine_flush (hangul);
-    return FALSE;
+    str = hangul_ic_get_commit_string (hangul->context);
+    if (str != NULL && str[0] != 0) {
+        IBusText *text = ibus_text_new_from_ucs4 (str);
+        ibus_engine_commit_text ((IBusEngine *)hangul, text);
+        g_object_unref (text);
+    }
+
+    ibus_hangul_engine_update_preedit_text (hangul);
+
+    if (!retval)
+        ibus_hangul_engine_flush (hangul);
+
+    return retval;
 }
 
 static void
