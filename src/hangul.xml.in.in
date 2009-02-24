@@ -20,7 +20,7 @@
 			<layout>us</layout>
 			<longname>Hangul</longname>
 			<description>Hangul Input Method</description>
-			<priority>99</priority>
+			<rank>99</rank>
 		</engine>
 	</engines>
 
