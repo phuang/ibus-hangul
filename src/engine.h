@@ -9,4 +9,7 @@
 
 GType   ibus_hangul_engine_get_type    (void);
 
+void    ibus_hangul_init (void);
+void    ibus_hangul_exit (void);
+
 #endif

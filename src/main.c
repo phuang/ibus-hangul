@@ -38,6 +38,7 @@ start_component (void)
     IBusComponent *component;
 
     ibus_init ();
+    ibus_hangul_init ();
 
     bus = ibus_bus_new ();
     g_signal_connect (bus, "disconnected", G_CALLBACK (ibus_disconnected_cb), NULL);
@@ -74,6 +75,8 @@ start_component (void)
     g_object_unref (component);
 
     ibus_main ();
+
+    ibus_hangul_exit ();
 }
 
 int
