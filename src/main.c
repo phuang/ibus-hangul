@@ -38,10 +38,11 @@ start_component (void)
     IBusComponent *component;
 
     ibus_init ();
-    ibus_hangul_init ();
 
     bus = ibus_bus_new ();
     g_signal_connect (bus, "disconnected", G_CALLBACK (ibus_disconnected_cb), NULL);
+
+    ibus_hangul_init (bus);
 
     component = ibus_component_new ("org.freedesktop.IBus.Hangul",
                                     N_("Hangul input method"),

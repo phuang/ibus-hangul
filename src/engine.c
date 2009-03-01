@@ -74,9 +74,16 @@ static void ibus_hangul_engine_property_hide
 static void ibus_hangul_engine_flush        (IBusHangulEngine       *hangul);
 static void ibus_hangul_engine_update_preedit_text
                                             (IBusHangulEngine       *hangul);
+static void ibus_config_value_changed       (IBusConfig             *config,
+                                             const gchar            *section,
+                                             const gchar            *name,
+                                             GValue                 *value,
+                                             gpointer                user_data);
 
 static IBusEngineClass *parent_class = NULL;
 static HanjaTable *hanja_table = NULL;
+static IBusConfig *config = NULL;
+static GString    *hangul_keyboard;
 
 GType
 ibus_hangul_engine_get_type (void)
@@ -106,15 +113,40 @@ ibus_hangul_engine_get_type (void)
 }
 
 void
-ibus_hangul_init (void)
+ibus_hangul_init (IBusBus *bus)
 {
+    IBusConnection *connection;
+    gboolean res;
+    GValue value = { 0, };
+
     hanja_table = hanja_table_load (NULL);
+
+    connection = ibus_bus_get_connection (bus);
+    config = ibus_config_new (connection);
+
+    hangul_keyboard = g_string_new_len ("2", 8);
+    res = ibus_config_get_value (config, "engine/Hangul",
+                                         "HangulKeyboard", &value);
+    if (res) {
+        const gchar* str = g_value_get_string (&value);
+        g_string_assign (hangul_keyboard, str);
+    }
+
+    g_signal_connect (config, "value-changed",
+		      G_CALLBACK(ibus_config_value_changed), NULL);
 }
 
 void
 ibus_hangul_exit (void)
 {
     hanja_table_delete (hanja_table);
+    hanja_table = NULL;
+
+    g_object_unref (config);
+    config = NULL;
+
+    g_string_free (hangul_keyboard, TRUE);
+    hangul_keyboard = NULL;
 }
 
 static void
@@ -148,7 +180,7 @@ ibus_hangul_engine_class_init (IBusHangulEngineClass *klass)
 static void
 ibus_hangul_engine_init (IBusHangulEngine *hangul)
 {
-    hangul->context = hangul_ic_new ("2");
+    hangul->context = hangul_ic_new (hangul_keyboard->str);
     hangul->hanja_list = NULL;
     hangul->hangul_mode = TRUE;
     hangul->hangul_mode_prop = ibus_property_new ("hangul_mode_prop",
@@ -582,3 +614,20 @@ ibus_hangul_engine_cursor_down (IBusEngine *engine)
     parent_class->cursor_down (engine);
 }
 
+static void
+ibus_config_value_changed (IBusConfig   *config,
+                           const gchar  *section,
+                           const gchar  *name,
+                           GValue       *value,
+                           gpointer      user_data)
+{
+    IBusHangulEngine *hangul = (IBusHangulEngine *) user_data;
+
+    if (strcmp(section, "engine/Hangul") == 0) {
+        if (strcmp(name, "HangulKeyboard") == 0) {
+            const gchar *str = g_value_get_string (value);
+            g_string_assign (hangul_keyboard, str);
+            hangul_ic_select_keyboard (hangul->context, hangul_keyboard->str);
+        }
+    }
+}
