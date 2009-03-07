@@ -20,6 +20,7 @@
 
 SUBDIRS = \
 	src \
+	setup \
 	icons \
 	m4 \
 	po \
