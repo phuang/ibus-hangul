@@ -115,14 +115,12 @@ ibus_hangul_engine_get_type (void)
 void
 ibus_hangul_init (IBusBus *bus)
 {
-    IBusConnection *connection;
     gboolean res;
     GValue value = { 0, };
 
     hanja_table = hanja_table_load (NULL);
 
-    connection = ibus_bus_get_connection (bus);
-    config = ibus_config_new (connection);
+    config = ibus_bus_get_config (bus);
 
     hangul_keyboard = g_string_new_len ("2", 8);
     res = ibus_config_get_value (config, "engine/Hangul",
@@ -131,9 +129,6 @@ ibus_hangul_init (IBusBus *bus)
         const gchar* str = g_value_get_string (&value);
         g_string_assign (hangul_keyboard, str);
     }
-
-    g_signal_connect (config, "value-changed",
-		      G_CALLBACK(ibus_config_value_changed), NULL);
 }
 
 void
@@ -197,6 +192,9 @@ ibus_hangul_engine_init (IBusHangulEngine *hangul)
     ibus_prop_list_append (hangul->prop_list,  hangul->hangul_mode_prop);
 
     hangul->table = ibus_lookup_table_new (9, 0, TRUE, FALSE);
+
+    g_signal_connect (config, "value-changed",
+		      G_CALLBACK(ibus_config_value_changed), hangul);
 }
 
 static GObject*
