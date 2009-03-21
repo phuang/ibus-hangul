@@ -57,12 +57,11 @@ static void ibus_hangul_engine_page_up      (IBusEngine             *engine);
 static void ibus_hangul_engine_page_down    (IBusEngine             *engine);
 static void ibus_hangul_engine_cursor_up    (IBusEngine             *engine);
 static void ibus_hangul_engine_cursor_down  (IBusEngine             *engine);
-static void ibus_hangul_engine_toggle_hangul_mode
-                                            (IBusHangulEngine       *hangul);
-#if 0
-static void ibus_hangul_property_activate   (IBusEngine             *engine,
+static void ibus_hangul_engine_property_activate
+                                            (IBusEngine             *engine,
                                              const gchar            *prop_name,
-                                             gint                    prop_state);
+                                             guint                   prop_state);
+#if 0
 static void ibus_hangul_engine_property_show
 											(IBusEngine             *engine,
                                              const gchar            *prop_name);
@@ -170,26 +169,33 @@ ibus_hangul_engine_class_init (IBusHangulEngineClass *klass)
 
     engine_class->cursor_up = ibus_hangul_engine_cursor_up;
     engine_class->cursor_down = ibus_hangul_engine_cursor_down;
+
+    engine_class->property_activate = ibus_hangul_engine_property_activate;
 }
 
 static void
 ibus_hangul_engine_init (IBusHangulEngine *hangul)
 {
+    IBusProperty* prop;
+    IBusText* label;
+    IBusText* tooltip;
+
     hangul->context = hangul_ic_new (hangul_keyboard->str);
     hangul->hanja_list = NULL;
     hangul->hangul_mode = TRUE;
-    hangul->hangul_mode_prop = ibus_property_new ("hangul_mode_prop",
-                                           PROP_TYPE_NORMAL,
-                                           NULL,
-                                           NULL,
-                                           NULL,
-                                           TRUE,
-                                           FALSE,
-                                           0,
-                                           NULL);
+    label = ibus_text_new_from_string("Setup");
+    tooltip = ibus_text_new_from_string("Configure hangul engine");
+    prop = ibus_property_new ("setup",
+                              PROP_TYPE_NORMAL,
+                              label,
+			      "gtk-preferences",
+                              tooltip,
+                              TRUE, TRUE, 0, NULL);
+    g_object_unref (label);
+    g_object_unref (tooltip);
 
     hangul->prop_list = ibus_prop_list_new ();
-    ibus_prop_list_append (hangul->prop_list,  hangul->hangul_mode_prop);
+    ibus_prop_list_append (hangul->prop_list,  prop);
 
     hangul->table = ibus_lookup_table_new (9, 0, TRUE, FALSE);
 
@@ -498,26 +504,6 @@ ibus_hangul_engine_flush (IBusHangulEngine *hangul)
 }
 
 static void
-ibus_hangul_engine_toggle_hangul_mode (IBusHangulEngine *hangul)
-{
-    IBusText *text;
-    hangul->hangul_mode = ! hangul->hangul_mode;
-
-    ibus_hangul_engine_flush (hangul);
-
-    if (hangul->hangul_mode) {
-        text = ibus_text_new_from_static_string ("한");
-    }
-    else {
-        text = ibus_text_new_from_static_string ("A");
-    }
-
-    ibus_property_set_label (hangul->hangul_mode_prop, text);
-    ibus_engine_update_property ((IBusEngine *)hangul, hangul->hangul_mode_prop);
-    g_object_unref (text);
-}
-
-static void
 ibus_hangul_engine_focus_in (IBusEngine *engine)
 {
     IBusHangulEngine *hangul = (IBusHangulEngine *) engine;
@@ -610,6 +596,30 @@ ibus_hangul_engine_cursor_down (IBusEngine *engine)
     }
 
     parent_class->cursor_down (engine);
+}
+
+static void
+ibus_hangul_engine_property_activate (IBusEngine    *engine,
+                                      const gchar   *prop_name,
+                                      guint          prop_state)
+{
+    if (strcmp(prop_name, "setup") == 0) {
+        GError *error = NULL;
+        gchar *argv[2] = { NULL, };
+	gchar *path;
+	const char* libexecdir;
+
+	libexecdir = g_getenv("LIBEXECDIR");
+	if (libexecdir == NULL)
+	    libexecdir = LIBEXECDIR;
+
+	path = g_build_filename(libexecdir, "ibus-setup-hangul", NULL);
+	argv[0] = path;
+	argv[1] = NULL;
+        g_spawn_async (NULL, argv, NULL, 0, NULL, NULL, NULL, &error);
+
+	g_free(path);
+    }
 }
 
 static void

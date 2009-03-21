@@ -46,6 +46,7 @@ ibus_engine_hangul_CFLAGS = \
 	@IBUS_CFLAGS@ \
 	@HANGUL_CFLAGS@ \
 	-DPKGDATADIR=\"$(pkgdatadir)\" \
+	-DLIBEXECDIR=\"$(libexecdir)\" \
 	$(NULL)
 ibus_engine_hangul_LDFLAGS = \
 	@IBUS_LIBS@ \
