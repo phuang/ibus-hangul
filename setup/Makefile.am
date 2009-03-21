@@ -19,10 +19,12 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 setup_hangul_PYTHON = \
-	config.py \
 	main.py \
 	setup.glade \
 	$(NULL)
+
+nodist_setup_hangul_PYTHON = config.py
+
 setup_hanguldir = $(datadir)/ibus-hangul/setup
 
 libexec_SCRIPTS = ibus-setup-hangul
