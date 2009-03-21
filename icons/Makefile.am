@@ -21,10 +21,12 @@
 
 icons_DATA = \
 	ibus-hangul.png \
+	ibus-hangul.svg \
 	$(NULL)
 
 iconsdir = $(pkgdatadir)/icons
 
 EXTRA_DIST = \
 	ibus-hangul.png \
+	ibus-hangul.svg \
 	$(NULL)
