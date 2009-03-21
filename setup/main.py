@@ -24,9 +24,10 @@ import gobject
 import gtk
 import gtk.glade as glade
 import ibus
+import gettext
+import config
 
-from gettext import dgettext
-_ = lambda a : dgettext("ibus-hangul", a)
+_ = lambda a : gettext.dgettext("ibus-hangul", a)
 
 class Setup ():
     def __init__ (self):
@@ -34,9 +35,9 @@ class Setup ():
         self.__config = self.__bus.get_config()
 	self.__config.connect("value-changed", self.on_value_changed, None)
 
-	glade.textdomain("ibus-hangul")
+	glade.bindtextdomain("ibus-hangul", config.localedir)
 	glade_file = os.path.join(os.path.dirname(__file__), "setup.glade")
-	self.__xml = glade.XML(glade_file)
+	self.__xml = glade.XML(glade_file, domain="ibus-hangul")
 
 	self.__hangul_keyboard = self.__xml.get_widget("HangulKeyboard")
 	model = gtk.ListStore(str, str, int)
@@ -95,4 +96,5 @@ class Setup ():
         return self.__config.set_value("engine/Hangul", name, v)
 
 if __name__ == "__main__":
+    gettext.bindtextdomain("ibus-hangul", config.localedir)
     Setup().run()
