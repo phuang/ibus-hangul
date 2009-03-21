@@ -19,6 +19,7 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 setup_hangul_PYTHON = \
+	config.py \
 	main.py \
 	setup.glade \
 	$(NULL)

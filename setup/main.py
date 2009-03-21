@@ -55,6 +55,8 @@ class Setup ():
 		break
 
 	self.__window = self.__xml.get_widget("dialog")
+	icon_file = os.path.join(config.datadir, "ibus-hangul", "icons", "ibus-hangul.svg")
+	self.__window.set_icon_from_file(icon_file)
 	self.__window.connect("response", self.on_response, None)
 	self.__window.show()
 
