@@ -1,1 +1,4 @@
+setup/main.py
+setup/setup.glade
+src/engine.c
 src/main.c
