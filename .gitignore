@@ -6,6 +6,7 @@
 *.so
 *~
 tags
+out
 Makefile.qmake
 Makefile
 Makefile.in
@@ -32,5 +33,23 @@ ltmain.sh
 missing
 stamp-h1
 py-compile
-ibus-anthy*.tar.*
-ibus-anthy.spec
+ibus-hangul*.tar.*
+ibus-hangul.spec
+
+# vim temp backup file
+.*.swp
+
+# files for po
+po/*.gmo
+po/*.pot
+po/stamp-po
+
+# files for setup
+setup/config.py
+setup/ibus-setup-hangul
+
+# files for engine
+src/test.sh
+src/hangul.xml
+src/hangul.xml.in
+src/ibus-engine-hangul
