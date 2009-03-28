@@ -11,6 +11,7 @@ Source0:    http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
 
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
+BuildRequires:  ibus-devel
 BuildRequires:  gettext-devel
 BuildRequires:  libtool
 BuildRequires:  libhangul-devel
@@ -44,6 +45,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING README
 %{_libexecdir}/ibus-engine-hangul
+%{_libexecdir}/ibus-setup-hangul
 %{_datadir}/@PACKAGE@
 %{_datadir}/ibus/component/*
 
