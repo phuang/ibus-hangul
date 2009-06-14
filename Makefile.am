@@ -63,3 +63,8 @@ clean-rpm:
 	$(RM) -r "`uname -i`"
 
 clean-local: clean-rpm
+
+dist-hook:
+	if test -d .git ; then \
+		git log --name-status --date=iso > $(distdir)/ChangeLog ; \
+	fi

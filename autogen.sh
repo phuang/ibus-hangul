@@ -2,6 +2,7 @@
 set -e
 set -x
 
+touch ChangeLog
 autopoint
 libtoolize --automake --copy
 aclocal -I m4
