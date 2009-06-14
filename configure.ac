@@ -54,7 +54,7 @@ PKG_CHECK_MODULES(IBUS, [
     ibus-1.0
 ])
 PKG_CHECK_MODULES(HANGUL, [
-    libhangul
+    libhangul >= 0.0.9
 ])
 
 # check env
