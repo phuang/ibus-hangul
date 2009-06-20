@@ -36,8 +36,9 @@ static void	ibus_hangul_engine_destroy		(IBusHangulEngine		*hangul);
 static gboolean
 			ibus_hangul_engine_process_key_event
                                             (IBusEngine             *engine,
-                                             guint               	 keyval,
-                                             guint               	 modifiers);
+                                             guint                   keyval,
+                                             guint                   keycode,
+                                             guint                   modifiers);
 static void ibus_hangul_engine_focus_in     (IBusEngine             *engine);
 static void ibus_hangul_engine_focus_out    (IBusEngine             *engine);
 static void ibus_hangul_engine_reset        (IBusEngine             *engine);
@@ -432,6 +433,7 @@ ibus_hangul_engine_process_candidate_key_event (IBusHangulEngine    *hangul,
 static gboolean
 ibus_hangul_engine_process_key_event (IBusEngine     *engine,
                                       guint           keyval,
+                                      guint           keycode,
                                       guint           modifiers)
 {
     IBusHangulEngine *hangul = (IBusHangulEngine *) engine;

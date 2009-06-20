@@ -59,7 +59,6 @@ component_DATA = \
 componentdir = @datadir@/ibus/component
 
 EXTRA_DIST = \
-	hangul.xml.in \
 	$(NULL)
 
 CLEANFILES = \
