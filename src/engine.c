@@ -269,6 +269,7 @@ ibus_hangul_engine_init (IBusHangulEngine *hangul)
     g_object_unref (label);
     g_object_unref (tooltip);
     ibus_prop_list_append (hangul->prop_list, prop);
+    g_object_unref (prop);
 
     hangul->table = ibus_lookup_table_new (9, 0, TRUE, FALSE);
 
