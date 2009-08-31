@@ -41,6 +41,8 @@ ibus_engine_hangul_SOURCES = \
 	main.c \
 	engine.c \
 	engine.h \
+	ustring.c \
+	ustring.h \
 	$(NULL)
 ibus_engine_hangul_CFLAGS = \
 	@IBUS_CFLAGS@ \
