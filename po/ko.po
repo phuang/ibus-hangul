@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-hangul\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2009-03-07 22:27+0900\n"
+"POT-Creation-Date: 2009-03-21 23:56+0900\n"
 "PO-Revision-Date: 2009-02-18 23:32+0900\n"
 "Last-Translator: Choe Hwanjin <choe.hwanjin@gmail.com>\n"
 "Language-Team: LANGUAGE <ko@li.org>\n"
@@ -15,23 +15,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: setup/main.py:43
+#: setup/main.py:44
 msgid "Dubeolsik"
 msgstr "두벌식"
 
-#: setup/main.py:44
+#: setup/main.py:45
 msgid "Sebeolsik Final"
 msgstr "세벌식 최종"
 
-#: setup/main.py:45
+#: setup/main.py:46
 msgid "Sebeolsik 390"
 msgstr "세벌식 390"
 
-#: setup/main.py:46
+#: setup/main.py:47
 msgid "Sebeolsik No-shift"
 msgstr "세벌식 순아래"
 
-#: setup/main.py:47
+#: setup/main.py:48
 msgid "Sebeolsik 2 set"
 msgstr "세벌식 두벌배열"
 

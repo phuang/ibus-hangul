@@ -53,7 +53,10 @@ ustring_clear(UString* str)
 UString*
 ustring_erase(UString* str, guint pos, guint len)
 {
-    return g_array_remove_range(str, pos, len);
+    if (len > 0)
+	return g_array_remove_range(str, pos, len);
+    else
+	return str;
 }
 
 ucschar*
