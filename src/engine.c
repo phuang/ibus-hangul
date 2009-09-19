@@ -95,6 +95,7 @@ static gboolean	lookup_table_is_visible	    (IBusLookupTable *table);
 
 static IBusEngineClass *parent_class = NULL;
 static HanjaTable *hanja_table = NULL;
+static HanjaTable *symbol_table = NULL;
 static IBusConfig *config = NULL;
 static GString    *hangul_keyboard;
 
@@ -133,6 +134,8 @@ ibus_hangul_init (IBusBus *bus)
 
     hanja_table = hanja_table_load (NULL);
 
+    symbol_table = hanja_table_load (IBUSHANGUL_DATADIR "/data/symbol.txt");
+
     config = ibus_bus_get_config (bus);
 
     hangul_keyboard = g_string_new_len ("2", 8);
@@ -149,6 +152,9 @@ ibus_hangul_exit (void)
 {
     hanja_table_delete (hanja_table);
     hanja_table = NULL;
+
+    hanja_table_delete (symbol_table);
+    symbol_table = NULL;
 
     g_object_unref (config);
     config = NULL;
@@ -387,7 +393,10 @@ ibus_hangul_engine_update_hanja_list (IBusHangulEngine *hangul)
     if (ustring_length(preedit) > 0) {
 	utf8 = ustring_to_utf8 (preedit, -1);
 	if (utf8 != NULL) {
-	    hangul->hanja_list = hanja_table_match_prefix (hanja_table, utf8);
+	    if (symbol_table != NULL)
+		hangul->hanja_list = hanja_table_match_prefix (symbol_table, utf8);
+	    if (hangul->hanja_list == NULL)
+		hangul->hanja_list = hanja_table_match_prefix (hanja_table, utf8);
 	    g_free (utf8);
 	}
     }
