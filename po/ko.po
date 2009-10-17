@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-hangul\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2009-03-21 23:56+0900\n"
+"POT-Creation-Date: 2009-10-16 22:29+0900\n"
 "PO-Revision-Date: 2009-02-18 23:32+0900\n"
 "Last-Translator: Choe Hwanjin <choe.hwanjin@gmail.com>\n"
 "Language-Team: LANGUAGE <ko@li.org>\n"
@@ -34,6 +34,10 @@ msgstr "세벌식 순아래"
 #: setup/main.py:48
 msgid "Sebeolsik 2 set"
 msgstr "세벌식 두벌배열"
+
+#: setup/main.py:49
+msgid "Romaja"
+msgstr "로마자"
 
 #: setup/setup.glade:8
 msgid "IBusHangul Setup"

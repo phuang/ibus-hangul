@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2009-03-21 23:56+0900\n"
+"POT-Creation-Date: 2009-10-16 22:29+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,6 +34,10 @@ msgstr ""
 
 #: setup/main.py:48
 msgid "Sebeolsik 2 set"
+msgstr ""
+
+#: setup/main.py:49
+msgid "Romaja"
 msgstr ""
 
 #: setup/setup.glade:8

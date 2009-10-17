@@ -46,6 +46,7 @@ class Setup ():
 	model.append([_("Sebeolsik 390"), "39", 2])
 	model.append([_("Sebeolsik No-shift"), "3s", 3])
 	model.append([_("Sebeolsik 2 set"), "32", 4])
+	model.append([_("Romaja"), "ro", 5])
 	self.__hangul_keyboard.set_model(model)
 
 	current = self.__read("HangulKeyboard", "2")
