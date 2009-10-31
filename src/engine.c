@@ -1,11 +1,16 @@
 /* vim:set et sts=4: */
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <ibus.h>
 #include <hangul.h>
 #include <string.h>
 
+#include "i18n.h"
 #include "engine.h"
 #include "ustring.h"
+
 
 typedef struct _IBusHangulEngine IBusHangulEngine;
 typedef struct _IBusHangulEngineClass IBusHangulEngineClass;
@@ -208,10 +213,10 @@ ibus_hangul_engine_init (IBusHangulEngine *hangul)
 
     hangul->prop_list = ibus_prop_list_new ();
 
-    label = ibus_text_new_from_static_string ("韓");
-    tooltip = ibus_text_new_from_static_string ("Enable/Disable Hanja mode");
+    label = ibus_text_new_from_string (_("Hanja lock"));
+    tooltip = ibus_text_new_from_string (_("Enable/Disable Hanja mode"));
     prop = ibus_property_new ("hanja_mode",
-                              PROP_TYPE_NORMAL,
+                              PROP_TYPE_TOGGLE,
                               label,
 			      NULL,
                               tooltip,
@@ -221,8 +226,8 @@ ibus_hangul_engine_init (IBusHangulEngine *hangul)
     ibus_prop_list_append (hangul->prop_list, prop);
     hangul->prop_hanja_mode = prop;
 
-    label = ibus_text_new_from_static_string ("Setup");
-    tooltip = ibus_text_new_from_static_string ("Configure hangul engine");
+    label = ibus_text_new_from_string (_("Setup"));
+    tooltip = ibus_text_new_from_string (_("Configure hangul engine"));
     prop = ibus_property_new ("setup",
                               PROP_TYPE_NORMAL,
                               label,
@@ -661,14 +666,11 @@ ibus_hangul_engine_focus_in (IBusEngine *engine)
 {
     IBusHangulEngine *hangul = (IBusHangulEngine *) engine;
 
-    IBusText* label = NULL;
     if (hangul->hanja_mode) {
-	label = ibus_text_new_from_static_string("漢");
+	hangul->prop_hanja_mode->state = PROP_STATE_CHECKED;
     } else {
-	label = ibus_text_new_from_static_string("韓");
+	hangul->prop_hanja_mode->state = PROP_STATE_UNCHECKED;
     }
-    ibus_property_set_label (hangul->prop_hanja_mode, label);
-    g_object_unref (label);
 
     ibus_engine_register_properties (engine, hangul->prop_list);
 
@@ -780,21 +782,15 @@ ibus_hangul_engine_property_activate (IBusEngine    *engine,
 	g_free(path);
     } else if (strcmp(prop_name, "hanja_mode") == 0) {
 	IBusHangulEngine *hangul = (IBusHangulEngine *) engine;
-	IBusText *label;
 
 	hangul->hanja_mode = !hangul->hanja_mode;
-
 	if (hangul->hanja_mode) {
-	    label = ibus_text_new_from_static_string("漢");
 	    hangul->prop_hanja_mode->state = PROP_STATE_CHECKED;
 	} else {
-	    label = ibus_text_new_from_static_string("韓");
 	    hangul->prop_hanja_mode->state = PROP_STATE_UNCHECKED;
 	}
 
-	ibus_property_set_label (hangul->prop_hanja_mode, label);
 	ibus_engine_update_property (engine, hangul->prop_hanja_mode);
-	g_object_unref(label);
     }
 }
 

@@ -49,6 +49,7 @@ ibus_engine_hangul_CFLAGS = \
 	@IBUS_CFLAGS@ \
 	@HANGUL_CFLAGS@ \
 	-DPKGDATADIR=\"$(pkgdatadir)\" \
+	-DLOCALEDIR=\"$(localedir)\" \
 	-DLIBEXECDIR=\"$(libexecdir)\" \
 	-DIBUSHANGUL_DATADIR=\"$(datadir)/ibus-hangul\" \
 	$(NULL)

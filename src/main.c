@@ -1,12 +1,16 @@
 /* vim:set et sts=4: */
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <ibus.h>
 #include <stdlib.h>
 #include <locale.h>
 #include <hangul.h>
+
+#include "i18n.h"
 #include "engine.h"
 
-#define N_(text) text
 
 static IBusBus *bus = NULL;
 static IBusFactory *factory = NULL;
@@ -87,6 +91,10 @@ main (gint argc, gchar **argv)
     GOptionContext *context;
 
     setlocale (LC_ALL, "");
+
+    bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+    textdomain(GETTEXT_PACKAGE);
 
     context = g_option_context_new ("- ibus hangul engine component");
 
