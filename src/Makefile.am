@@ -43,6 +43,7 @@ ibus_engine_hangul_SOURCES = \
 	engine.h \
 	ustring.c \
 	ustring.h \
+	i18n.h \
 	$(NULL)
 
 ibus_engine_hangul_CFLAGS = \
