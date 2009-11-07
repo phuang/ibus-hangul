@@ -679,17 +679,24 @@ ibus_hangul_engine_flush (IBusHangulEngine *hangul)
     const gunichar *str;
     IBusText *text;
 
+    ibus_hangul_engine_hide_lookup_table (hangul);
+
     str = hangul_ic_flush (hangul->context);
 
-    if (str == NULL || str[0] == 0)
+    ustring_append_ucs4 (hangul->preedit, str, -1);
+
+    if (ustring_length (hangul->preedit) == 0)
         return;
 
+    str = ustring_begin (hangul->preedit);
     text = ibus_text_new_from_ucs4 (str);
 
     ibus_engine_hide_preedit_text ((IBusEngine *) hangul);
     ibus_engine_commit_text ((IBusEngine *) hangul, text);
 
     g_object_unref (text);
+
+    ustring_clear(hangul->preedit);
 }
 
 static void
@@ -822,6 +829,7 @@ ibus_hangul_engine_property_activate (IBusEngine    *engine,
 	}
 
 	ibus_engine_update_property (engine, hangul->prop_hanja_mode);
+	ibus_hangul_engine_flush (hangul);
     }
 }
 
