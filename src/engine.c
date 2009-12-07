@@ -6,6 +6,7 @@
 #include <ibus.h>
 #include <hangul.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "i18n.h"
 #include "engine.h"
@@ -630,6 +631,15 @@ ibus_hangul_engine_process_key_event (IBusEngine     *engine,
     if (keyval == IBUS_BackSpace) {
         retval = hangul_ic_backspace (hangul->context);
     } else {
+	// ignore capslock
+	if (modifiers & IBUS_LOCK_MASK) {
+	    if (keyval >= 'A' && keyval <= 'z') {
+		if (isupper(keyval))
+		    keyval = tolower(keyval);
+		else
+		    keyval = toupper(keyval);
+	    }
+	}
         retval = hangul_ic_process (hangul->context, keyval);
     }
 
