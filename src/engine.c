@@ -114,6 +114,7 @@ static HanjaTable *symbol_table = NULL;
 static IBusConfig *config = NULL;
 static GString    *hangul_keyboard = NULL;
 static GArray     *hanja_keys = NULL;
+static int lookup_table_orientation = 0;
 
 GType
 ibus_hangul_engine_get_type (void)
@@ -534,49 +535,95 @@ ibus_hangul_engine_process_candidate_key_event (IBusHangulEngine    *hangul,
 	    ibus_hangul_engine_hide_lookup_table (hangul);
 	}
 	return TRUE;
-    } else if (keyval == IBUS_Left) {
-        ibus_lookup_table_cursor_up (hangul->table);
-        ibus_hangul_engine_update_lookup_table_ui (hangul);
-	return TRUE;
-    } else if (keyval == IBUS_Right) {
-        ibus_lookup_table_cursor_down (hangul->table);
-        ibus_hangul_engine_update_lookup_table_ui (hangul);
-	return TRUE;
-    } else if (keyval == IBUS_Up) {
-        ibus_lookup_table_page_up (hangul->table);
-        ibus_hangul_engine_update_lookup_table_ui (hangul);
-	return TRUE;
-    } else if (keyval == IBUS_Down) {
-        ibus_lookup_table_page_down (hangul->table);
-        ibus_hangul_engine_update_lookup_table_ui (hangul);
-	return TRUE;
     } else if (keyval == IBUS_Page_Up) {
-        ibus_lookup_table_page_up (hangul->table);
-        ibus_hangul_engine_update_lookup_table_ui (hangul);
+	ibus_lookup_table_page_up (hangul->table);
+	ibus_hangul_engine_update_lookup_table_ui (hangul);
 	return TRUE;
     } else if (keyval == IBUS_Page_Down) {
-        ibus_lookup_table_page_down (hangul->table);
-        ibus_hangul_engine_update_lookup_table_ui (hangul);
+	ibus_lookup_table_page_down (hangul->table);
+	ibus_hangul_engine_update_lookup_table_ui (hangul);
 	return TRUE;
+    } else {
+	if (lookup_table_orientation == 0) {
+	    // horizontal
+	    if (keyval == IBUS_Left) {
+		ibus_lookup_table_cursor_up (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_Right) {
+		ibus_lookup_table_cursor_down (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_Up) {
+		ibus_lookup_table_page_up (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_Down) {
+		ibus_lookup_table_page_down (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    }
+	} else {
+	    // vertical
+	    if (keyval == IBUS_Left) {
+		ibus_lookup_table_page_up (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_Right) {
+		ibus_lookup_table_page_down (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_Up) {
+		ibus_lookup_table_cursor_up (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_Down) {
+		ibus_lookup_table_cursor_down (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    }
+	}
     }
 
     if (!hangul->hanja_mode) {
-	if (keyval == IBUS_h) {
-	    ibus_lookup_table_cursor_up (hangul->table);
-	    ibus_hangul_engine_update_lookup_table_ui (hangul);
-	    return TRUE;
-	} else if (keyval == IBUS_l) {
-	    ibus_lookup_table_cursor_down (hangul->table);
-	    ibus_hangul_engine_update_lookup_table_ui (hangul);
-	    return TRUE;
-	} else if (keyval == IBUS_k) {
-	    ibus_lookup_table_page_up (hangul->table);
-	    ibus_hangul_engine_update_lookup_table_ui (hangul);
-	    return TRUE;
-	} else if (keyval == IBUS_j) {
-	    ibus_lookup_table_page_down (hangul->table);
-	    ibus_hangul_engine_update_lookup_table_ui (hangul);
-	    return TRUE;
+	if (lookup_table_orientation == 0) {
+	    // horizontal
+	    if (keyval == IBUS_h) {
+		ibus_lookup_table_cursor_up (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_l) {
+		ibus_lookup_table_cursor_down (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_k) {
+		ibus_lookup_table_page_up (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_j) {
+		ibus_lookup_table_page_down (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    }
+	} else {
+	    // vertical
+	    if (keyval == IBUS_h) {
+		ibus_lookup_table_page_up (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_l) {
+		ibus_lookup_table_page_down (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_k) {
+		ibus_lookup_table_cursor_up (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    } else if (keyval == IBUS_j) {
+		ibus_lookup_table_cursor_down (hangul->table);
+		ibus_hangul_engine_update_lookup_table_ui (hangul);
+		return TRUE;
+	    }
 	}
     }
 
@@ -860,6 +907,10 @@ ibus_config_value_changed (IBusConfig   *config,
         } else if (strcmp(name, "HanjaKeys") == 0) {
 	    const gchar* str = g_value_get_string (value);
 	    key_event_list_set(hanja_keys, str);
+	}
+    } else if (strcmp(section, "panel") == 0) {
+        if (strcmp(name, "lookup_table_orientation") == 0) {
+            lookup_table_orientation = g_value_get_int (value);
 	}
     }
 }
