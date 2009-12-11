@@ -28,7 +28,6 @@ struct _IBusHangulEngine {
 
     IBusLookupTable *table;
 
-    IBusProperty    *hangul_mode_prop;
     IBusProperty    *prop_hanja_mode;
     IBusPropList    *prop_list;
 };
@@ -295,14 +294,14 @@ ibus_hangul_engine_constructor (GType                   type,
 static void
 ibus_hangul_engine_destroy (IBusHangulEngine *hangul)
 {
+    if (hangul->prop_hanja_mode) {
+        g_object_unref (hangul->prop_hanja_mode);
+        hangul->prop_hanja_mode = NULL;
+    }
+
     if (hangul->prop_list) {
         g_object_unref (hangul->prop_list);
         hangul->prop_list = NULL;
-    }
-
-    if (hangul->hangul_mode_prop) {
-        g_object_unref (hangul->hangul_mode_prop);
-        hangul->hangul_mode_prop = NULL;
     }
 
     if (hangul->table) {
