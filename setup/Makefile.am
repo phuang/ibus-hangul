@@ -20,7 +20,7 @@
 
 setup_hangul_PYTHON = \
 	main.py \
-	setup.glade \
+	setup.ui \
 	$(NULL)
 
 nodist_setup_hangul_PYTHON = config.py
@@ -39,7 +39,6 @@ EXTRA_DIST = \
 
 test:
 	$(ENV) DBUS_DEBUG=true \
-		   LANG=en_US \
-		   PYTHONPATH=$(abs_top_srcdir):$(pyexecdir) \
-		   $(PYTHON) $(srcdir)/main.py
+	       PYTHONPATH=$(abs_top_srcdir):$(pyexecdir) \
+	       $(PYTHON) $(srcdir)/main.py
 

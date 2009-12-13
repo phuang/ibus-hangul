@@ -1,4 +1,5 @@
+setup/keycapturedialog.py
 setup/main.py
-setup/setup.glade
+[type: gettext/glade]setup/setup.ui
 src/engine.c
 src/main.c
