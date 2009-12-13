@@ -35,6 +35,9 @@ stamp-h1
 py-compile
 ibus-hangul*.tar.*
 ibus-hangul.spec
+intltool-extract.in
+intltool-merge.in
+intltool-update.in
 
 # vim temp backup file
 .*.swp
@@ -43,6 +46,7 @@ ibus-hangul.spec
 po/*.gmo
 po/*.pot
 po/stamp-po
+po/stamp-it
 
 # files for setup
 setup/config.py
