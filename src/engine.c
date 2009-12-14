@@ -955,10 +955,17 @@ static gboolean
 key_event_list_match(GArray* list, guint keyval, guint modifiers)
 {
     guint i;
+    guint mask;
 
-    modifiers &= 0x7FFF;          /* ignore ibus internal values */
-    modifiers &= ~IBUS_LOCK_MASK; /* ignore capslock */
-    modifiers &= ~IBUS_MOD2_MASK; /* ignore numlock */
+    /* ignore capslock and numlock */
+    mask = IBUS_SHIFT_MASK |
+	   IBUS_CONTROL_MASK |
+	   IBUS_MOD1_MASK |
+	   IBUS_MOD3_MASK |
+	   IBUS_MOD4_MASK |
+	   IBUS_MOD5_MASK;
+
+    modifiers &= mask;
     for (i = 0; i < list->len; ++i) {
 	struct KeyEvent* ev = &g_array_index(list, struct KeyEvent, i);
 	if (ev->keyval == keyval && ev->modifiers == modifiers) {
