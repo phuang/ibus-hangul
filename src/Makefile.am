@@ -55,7 +55,7 @@ ibus_engine_hangul_CFLAGS = \
 	-DIBUSHANGUL_DATADIR=\"$(datadir)/ibus-hangul\" \
 	$(NULL)
 
-ibus_engine_hangul_LDFLAGS = \
+ibus_engine_hangul_LDADD = \
 	@IBUS_LIBS@ \
 	@HANGUL_LIBS@ \
 	$(NULL)
