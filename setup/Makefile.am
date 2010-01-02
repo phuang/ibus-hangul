@@ -20,6 +20,7 @@
 
 setup_hangul_PYTHON = \
 	main.py \
+	keycapturedialog.py \
 	setup.ui \
 	$(NULL)
 
