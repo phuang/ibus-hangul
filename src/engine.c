@@ -158,6 +158,8 @@ ibus_hangul_init (IBusBus *bus)
     symbol_table = hanja_table_load (IBUSHANGUL_DATADIR "/data/symbol.txt");
 
     config = ibus_bus_get_config (bus);
+    if (config)
+        g_object_ref_sink (config);
 
     hangul_keyboard = g_string_new_len ("2", 8);
     res = ibus_config_get_value (config, "engine/Hangul",
@@ -248,6 +250,7 @@ ibus_hangul_engine_init (IBusHangulEngine *hangul)
     hangul->hanja_mode = FALSE;
 
     hangul->prop_list = ibus_prop_list_new ();
+    g_object_ref_sink (hangul->prop_list);
 
     label = ibus_text_new_from_string (_("Hanja lock"));
     tooltip = ibus_text_new_from_string (_("Enable/Disable Hanja mode"));
@@ -257,8 +260,7 @@ ibus_hangul_engine_init (IBusHangulEngine *hangul)
                               NULL,
                               tooltip,
                               TRUE, TRUE, PROP_STATE_UNCHECKED, NULL);
-    g_object_unref (label);
-    g_object_unref (tooltip);
+    g_object_ref_sink (prop);
     ibus_prop_list_append (hangul->prop_list, prop);
     hangul->prop_hanja_mode = prop;
 
@@ -270,12 +272,10 @@ ibus_hangul_engine_init (IBusHangulEngine *hangul)
                               "gtk-preferences",
                               tooltip,
                               TRUE, TRUE, PROP_STATE_UNCHECKED, NULL);
-    g_object_unref (label);
-    g_object_unref (tooltip);
     ibus_prop_list_append (hangul->prop_list, prop);
-    g_object_unref (prop);
 
     hangul->table = ibus_lookup_table_new (9, 0, TRUE, FALSE);
+    g_object_ref_sink (hangul->table);
 
     g_signal_connect (config, "value-changed",
                       G_CALLBACK(ibus_config_value_changed), hangul);
@@ -356,11 +356,9 @@ ibus_hangul_engine_update_preedit_text (IBusHangulEngine *hangul)
                                          text,
                                          ibus_text_get_length (text),
                                          TRUE);
-        g_object_unref (text);
     } else {
         text = ibus_text_new_from_static_string ("");
         ibus_engine_update_preedit_text ((IBusEngine *)hangul, text, 0, FALSE);
-        g_object_unref (text);
     }
 
     ustring_delete(preedit);
@@ -379,7 +377,6 @@ ibus_hangul_engine_update_lookup_table_ui (IBusHangulEngine *hangul)
 
     text = ibus_text_new_from_string (comment);
     ibus_engine_update_auxiliary_text ((IBusEngine *)hangul, text, TRUE);
-    g_object_unref (text);
 
     // update lookup table
     ibus_engine_update_lookup_table ((IBusEngine *)hangul, hangul->table, TRUE);
@@ -413,7 +410,6 @@ ibus_hangul_engine_commit_current_candidate (IBusHangulEngine *hangul)
 
     text = ibus_text_new_from_string (value);
     ibus_engine_commit_text ((IBusEngine *)hangul, text);
-    g_object_unref (text);
 }
 
 static void
@@ -460,7 +456,6 @@ ibus_hangul_engine_apply_hanja_list (IBusHangulEngine *hangul)
             const char* value = hanja_list_get_nth_value (list, i);
             IBusText* text = ibus_text_new_from_string (value);
             ibus_lookup_table_append_candidate (hangul->table, text);
-            g_object_unref (text);
         }
 
         ibus_lookup_table_set_cursor_pos (hangul->table, 0);
@@ -710,7 +705,6 @@ ibus_hangul_engine_process_key_event (IBusEngine     *engine,
                 preedit = ustring_begin (hangul->preedit);
                 text = ibus_text_new_from_ucs4 ((gunichar*)preedit);
                 ibus_engine_commit_text (engine, text);
-                g_object_unref (text);
             }
             ustring_clear (hangul->preedit);
         }
@@ -718,7 +712,6 @@ ibus_hangul_engine_process_key_event (IBusEngine     *engine,
         if (str != NULL && str[0] != 0) {
             IBusText *text = ibus_text_new_from_ucs4 (str);
             ibus_engine_commit_text (engine, text);
-            g_object_unref (text);
         }
     }
 
@@ -754,8 +747,6 @@ ibus_hangul_engine_flush (IBusHangulEngine *hangul)
 
     ibus_engine_hide_preedit_text ((IBusEngine *) hangul);
     ibus_engine_commit_text ((IBusEngine *) hangul, text);
-
-    g_object_unref (text);
 
     ustring_clear(hangul->preedit);
 }
