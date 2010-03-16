@@ -352,10 +352,11 @@ ibus_hangul_engine_update_preedit_text (IBusHangulEngine *hangul)
                 0x00ffffff, preedit_len, -1);
         ibus_text_append_attribute (text, IBUS_ATTR_TYPE_BACKGROUND,
                 0x00000000, preedit_len, -1);
-        ibus_engine_update_preedit_text ((IBusEngine *)hangul,
-                                         text,
-                                         ibus_text_get_length (text),
-                                         TRUE);
+        ibus_engine_update_preedit_text_with_mode ((IBusEngine *)hangul,
+                                                   text,
+                                                   ibus_text_get_length (text),
+                                                   TRUE,
+                                                   IBUS_ENGINE_PREEDIT_COMMIT);
     } else {
         text = ibus_text_new_from_static_string ("");
         ibus_engine_update_preedit_text ((IBusEngine *)hangul, text, 0, FALSE);
@@ -746,7 +747,8 @@ ibus_hangul_engine_flush (IBusHangulEngine *hangul)
     text = ibus_text_new_from_ucs4 (str);
 
     ibus_engine_hide_preedit_text ((IBusEngine *) hangul);
-    ibus_engine_commit_text ((IBusEngine *) hangul, text);
+    // Use ibus_engine_update_preedit_text_with_mode instead.
+    //ibus_engine_commit_text ((IBusEngine *) hangul, text);
 
     ustring_clear(hangul->preedit);
 }
