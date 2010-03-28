@@ -49,7 +49,7 @@ start_component (void)
     ibus_hangul_init (bus);
 
     component = ibus_component_new ("org.freedesktop.IBus.Hangul",
-                                    N_("Hangul input method"),
+                                    N_("Korean input method"),
                                     "0.1.0",
                                     "GPL",
                                     "Peng Huang <shawn.p.huang@gmail.com>",
@@ -58,8 +58,8 @@ start_component (void)
                                     "ibus-hangul");
     ibus_component_add_engine (component,
                                ibus_engine_desc_new ("hangul",
-                                                     N_("Hangul Input Method"),
-                                                     N_("Hangul Input Method"),
+                                                     N_("Korean Input Method"),
+                                                     N_("Korean Input Method"),
                                                      "ko",
                                                      "GPL",
                                                      "Peng Huang <shawn.p.huang@gmail.com>",

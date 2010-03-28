@@ -7,45 +7,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-hangul\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-13 20:54+0900\n"
+"POT-Creation-Date: 2010-03-29 00:05+0900\n"
 "PO-Revision-Date: 2009-02-18 23:32+0900\n"
 "Last-Translator: Choe Hwanjin <choe.hwanjin@gmail.com>\n"
 "Language-Team: korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: ../setup/main.py:46 ../setup/setup.ui.h:4
-msgid "Hangul"
-msgstr "한글"
-
-#: ../setup/main.py:51
-msgid "Dubeolsik"
-msgstr "두벌식"
-
-#: ../setup/main.py:52
-msgid "Sebeolsik Final"
-msgstr "세벌식 최종"
-
-#: ../setup/main.py:53
-msgid "Sebeolsik 390"
-msgstr "세벌식 390"
-
-#: ../setup/main.py:54
-msgid "Sebeolsik No-shift"
-msgstr "세벌식 순아래"
-
-#: ../setup/main.py:55
-msgid "Sebeolsik 2 set"
-msgstr "세벌식 두벌배열"
-
-#: ../setup/main.py:56
-msgid "Romaja"
-msgstr "로마자"
-
-#: ../setup/main.py:142
-msgid "Select Hanja key"
-msgstr "한자키를 선택하시오"
 
 #: ../setup/keycapturedialog.py:15
 msgid ""
@@ -57,6 +25,34 @@ msgstr ""
 "니다.\n"
 "그 키를 사용하시려면 \"확인\"을 누르시고, 사용하지 않으시려면 \"취소\"를누르"
 "십시오."
+
+#: ../setup/main.py:50
+msgid "Dubeolsik"
+msgstr "두벌식"
+
+#: ../setup/main.py:51
+msgid "Sebeolsik Final"
+msgstr "세벌식 최종"
+
+#: ../setup/main.py:52
+msgid "Sebeolsik 390"
+msgstr "세벌식 390"
+
+#: ../setup/main.py:53
+msgid "Sebeolsik No-shift"
+msgstr "세벌식 순아래"
+
+#: ../setup/main.py:54
+msgid "Sebeolsik 2 set"
+msgstr "세벌식 두벌배열"
+
+#: ../setup/main.py:55
+msgid "Romaja"
+msgstr "로마자"
+
+#: ../setup/main.py:141
+msgid "Select Hanja key"
+msgstr "한자키를 선택하시오"
 
 #: ../setup/setup.ui.h:1
 msgid "<b>Hanja key</b>"
@@ -70,6 +66,10 @@ msgstr "<b>자판 설정</b>"
 msgid "Advanced"
 msgstr "고급"
 
+#: ../setup/setup.ui.h:4
+msgid "Hangul"
+msgstr "한글"
+
 #: ../setup/setup.ui.h:5
 msgid "Hanja"
 msgstr "한자"
@@ -82,26 +82,28 @@ msgstr "IBus 한글 설정"
 msgid "_Hangul keyboard:"
 msgstr "한글 자판(_H)"
 
-#: ../src/engine.c:248
+#: ../src/engine.c:255
 msgid "Hanja lock"
 msgstr "한자 전용"
 
-#: ../src/engine.c:249
+#: ../src/engine.c:256
 msgid "Enable/Disable Hanja mode"
 msgstr "한자 전용 모드 선택합니다"
 
-#: ../src/engine.c:261
+#: ../src/engine.c:267
 msgid "Setup"
 msgstr "설정"
 
-#: ../src/engine.c:262
+#: ../src/engine.c:268
 msgid "Configure hangul engine"
 msgstr "한글 입력기를 설정합니다"
 
 #: ../src/main.c:52
-msgid "Hangul input method"
+#, fuzzy
+msgid "Korean input method"
 msgstr "한글 입력기"
 
 #: ../src/main.c:61 ../src/main.c:62
-msgid "Hangul Input Method"
+#, fuzzy
+msgid "Korean Input Method"
 msgstr "한글 입력기"

@@ -2,7 +2,7 @@
 <!-- filename: hangul.xml -->
 <component>
 	<name>org.freedesktop.IBus.Hangul</name>
-	<description>Hangul Component</description>
+	<description>Korean Component</description>
 	<exec>${libexecdir}/ibus-engine-hangul --ibus</exec>
 	<version>@VERSION@</version>
 	<author>Peng Huang &lt;shawn.p.huang@gmail.com&gt;</author>
@@ -18,8 +18,8 @@
 			<author>Peng Huang &lt;shawn.p.huang@gmail.com&gt;</author>
 			<icon>${pkgdatadir}/icons/ibus-hangul.png</icon>
 			<layout>us</layout>
-			<longname>Hangul</longname>
-			<description>Hangul Input Method</description>
+			<longname>Korean</longname>
+			<description>Korean Input Method</description>
 			<rank>99</rank>
 		</engine>
 	</engines>
