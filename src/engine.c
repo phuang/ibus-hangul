@@ -89,6 +89,12 @@ static void ibus_hangul_engine_property_hide
                                              const gchar            *prop_name);
 #endif
 
+static void ibus_hangul_engine_candidate_clicked
+                                            (IBusEngine             *engine,
+                                             guint                   index,
+                                             guint                   button,
+                                             guint                   state);
+
 static void ibus_hangul_engine_flush        (IBusHangulEngine       *hangul);
 static void ibus_hangul_engine_update_preedit_text
                                             (IBusHangulEngine       *hangul);
@@ -234,6 +240,8 @@ ibus_hangul_engine_class_init (IBusHangulEngineClass *klass)
     engine_class->cursor_down = ibus_hangul_engine_cursor_down;
 
     engine_class->property_activate = ibus_hangul_engine_property_activate;
+
+    engine_class->candidate_clicked = ibus_hangul_engine_candidate_clicked;
 }
 
 static void
@@ -971,4 +979,27 @@ key_event_list_match(GArray* list, guint keyval, guint modifiers)
     }
 
     return FALSE;
+}
+
+static void
+ibus_hangul_engine_candidate_clicked (IBusEngine     *engine,
+                                      guint           index,
+                                      guint           button,
+                                      guint           state)
+{
+    IBusHangulEngine *hangul = (IBusHangulEngine *) engine;
+    if (hangul == NULL)
+	return;
+
+    if (hangul->table == NULL)
+	return;
+
+    ibus_lookup_table_set_cursor_pos (hangul->table, index);
+    ibus_hangul_engine_commit_current_candidate (hangul);
+
+    if (hangul->hanja_mode) {
+	ibus_hangul_engine_update_lookup_table (hangul);
+    } else {
+	ibus_hangul_engine_hide_lookup_table (hangul);
+    }
 }
